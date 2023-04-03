@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import sys
 
@@ -29,7 +30,7 @@ def part2(cargoPositions, instructions):
     cargoStacks = [[cargoStacks[i][j] for i in range(len(cargoStacks))] for j in range(len(cargoStacks[0]))]
     cargoStacks = [list(filter(None, reversed(line))) for line in cargoStacks]
     for instruction in instructions.splitlines():
-        _move, qty, _from, fromStack, _to, toStack = instruction.split()
+        _, qty, _, fromStack, _, toStack = instruction.split()
         qty = int(qty)
         fromStack = int(fromStack) - 1
         toStack = int(toStack) - 1
