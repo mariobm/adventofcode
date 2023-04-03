@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import sys
 
@@ -10,10 +11,7 @@ def main():
 def part1(cargoPositions, instructions):
     cargoYSize = int(cargoPositions.splitlines()[-1][-2])
     cargoXSize = len(cargoPositions.splitlines()[:-1])
-    cargoStacks = [[None for x in range(cargoXSize)] for y in range(cargoYSize)]
-    for idx, char in enumerate(cargoPositions):
-        if ('A' <= char <= 'Z'):
-            cargoStacks[(idx // 4) % cargoYSize][(idx // 4) // cargoYSize] = char
+    cargoStacks = [[char if ('A' <= char <= 'Z') else None for idx, char in enumerate(cargoPositions) if idx % 4 == 0 and ('A' <= char <= 'Z')] for y in range(cargoYSize)]
     cargoStacks = [list(filter(None, reversed(x))) for x in cargoStacks]
     for instruction in instructions.splitlines():
         _move, qty, _from, fromStack, _to, toStack = instruction.split()
@@ -25,7 +23,7 @@ def part1(cargoPositions, instructions):
     return ''.join([cargoStacks[i][-1] for i in range(len(cargoStacks))])
 
 def part2(cargoPositions, instructions):
-    cargoStacks = [[line[i:i+4].strip() for i in range(0, len(line), 4)] for line in cargoPositions.split('\n')[:-1]]
+    cargoStacks = [[line[i:i+4].strip() if i % 4 == 0 and ('A' <= line[i:i+4].strip() <= 'Z') else None for i in range(0, len(line), 4)] for line in cargoPositions.split('\n')[:-1]]
     cargoStacks = [[cargoStacks[i][j] for i in range(len(cargoStacks))] for j in range(len(cargoStacks[0]))]
     cargoStacks = [list(filter(None, reversed(line))) for line in cargoStacks]
     for instruction in instructions.splitlines():
