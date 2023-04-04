@@ -1,4 +1,6 @@
+
 #!/usr/bin/env python3
+
 import sys
 
 def main():
@@ -16,10 +18,7 @@ def part1(cargoPositions, instructions):
             cargoStacks[(idx // 4) % cargoYSize][(idx // 4) // cargoYSize] = char
     cargoStacks = [list(filter(None, reversed(x))) for x in cargoStacks]
     for instruction in instructions.splitlines():
-        _move, qty, _from, fromStack, _to, toStack = instruction.split()
-        qty = int(qty)
-        fromStack = int(fromStack) - 1
-        toStack = int(toStack) - 1
+        move, qty, fromStack, toStack = instruction.split()[0], int(instruction.split()[1]), int(instruction.split()[3])-1, int(instruction.split()[5])-1
         for _ in range(qty):
             cargoStacks[toStack].append(cargoStacks[fromStack].pop())
     return ''.join([cargoStacks[i][-1] for i in range(len(cargoStacks))])
@@ -29,10 +28,7 @@ def part2(cargoPositions, instructions):
     cargoStacks = [[cargoStacks[i][j] for i in range(len(cargoStacks))] for j in range(len(cargoStacks[0]))]
     cargoStacks = [list(filter(None, reversed(line))) for line in cargoStacks]
     for instruction in instructions.splitlines():
-        _move, qty, _from, fromStack, _to, toStack = instruction.split()
-        qty = int(qty)
-        fromStack = int(fromStack) - 1
-        toStack = int(toStack) - 1
+        move, qty, fromStack, toStack = instruction.split()[0], int(instruction.split()[1]), int(instruction.split()[3])-1, int(instruction.split()[5])-1
         tempStack = []
         for _ in range(qty):
             tempStack.append(cargoStacks[fromStack].pop())
@@ -42,3 +38,4 @@ def part2(cargoPositions, instructions):
 
 if __name__ == '__main__':
     main()
+
