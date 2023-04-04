@@ -4,13 +4,13 @@ import sys
 def main():
     with open(sys.argv[1]) as f:
         cargoPositions, instructions = f.read().split('\n\n')
-    print("Part 1: {}".format(part1(cargoPositions, instructions)))
-    print("Part 2: {}".format(part2(cargoPositions, instructions)))
+    print(f"Part 1: {part1(cargoPositions, instructions)}")
+    print(f"Part 2: {part2(cargoPositions, instructions)}")
 
 def part1(cargoPositions, instructions):
     cargoYSize = int(cargoPositions.splitlines()[-1][-2])
     cargoXSize = len(cargoPositions.splitlines()[:-1])
-    cargoStacks = [[None for x in range(cargoXSize)] for y in range(cargoYSize)]
+    cargoStacks = [[None] * cargoXSize for _ in range(cargoYSize)]
     for idx, char in enumerate(cargoPositions):
         if ('A' <= char <= 'Z'):
             cargoStacks[(idx // 4) % cargoYSize][(idx // 4) // cargoYSize] = char
@@ -42,3 +42,4 @@ def part2(cargoPositions, instructions):
 
 if __name__ == '__main__':
     main()
+
