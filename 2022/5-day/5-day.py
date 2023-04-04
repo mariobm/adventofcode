@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import sys
 
@@ -19,9 +20,8 @@ def part1(cargoPositions, instructions):
         _move, qty, _from, fromStack, _to, toStack = instruction.split()
         qty = int(qty)
         fromStack = int(fromStack) - 1
-        toStack = int(toStack) - 1
-        for _ in range(qty):
-            cargoStacks[toStack].append(cargoStacks[fromStack].pop())
+        cargoStacks[toStack].extend(reversed(cargoStacks[fromStack][-qty:]))
+        cargoStacks[fromStack] = cargoStacks[fromStack][:-qty]
     return ''.join([cargoStacks[i][-1] for i in range(len(cargoStacks))])
 
 def part2(cargoPositions, instructions):
@@ -42,3 +42,4 @@ def part2(cargoPositions, instructions):
 
 if __name__ == '__main__':
     main()
+
