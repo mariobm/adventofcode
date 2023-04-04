@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import sys
 
@@ -17,11 +18,9 @@ def part1(cargoPositions, instructions):
     cargoStacks = [list(filter(None, reversed(x))) for x in cargoStacks]
     for instruction in instructions.splitlines():
         _move, qty, _from, fromStack, _to, toStack = instruction.split()
-        qty = int(qty)
-        fromStack = int(fromStack) - 1
-        toStack = int(toStack) - 1
+        qty, fromStack, toStack = map(int, (qty, fromStack, toStack))
         for _ in range(qty):
-            cargoStacks[toStack].append(cargoStacks[fromStack].pop())
+            cargoStacks[toStack-1].append(cargoStacks[fromStack-1].pop())
     return ''.join([cargoStacks[i][-1] for i in range(len(cargoStacks))])
 
 def part2(cargoPositions, instructions):
@@ -30,14 +29,12 @@ def part2(cargoPositions, instructions):
     cargoStacks = [list(filter(None, reversed(line))) for line in cargoStacks]
     for instruction in instructions.splitlines():
         _move, qty, _from, fromStack, _to, toStack = instruction.split()
-        qty = int(qty)
-        fromStack = int(fromStack) - 1
-        toStack = int(toStack) - 1
+        qty, fromStack, toStack = map(int, (qty, fromStack, toStack))
         tempStack = []
         for _ in range(qty):
-            tempStack.append(cargoStacks[fromStack].pop())
+            tempStack.append(cargoStacks[fromStack-1].pop())
         for _ in range(qty):
-            cargoStacks[toStack].append(tempStack.pop())
+            cargoStacks[toStack-1].append(tempStack.pop())
     return ''.join([cargoStacks[i][-1][1] for i in range(len(cargoStacks))])
 
 if __name__ == '__main__':
