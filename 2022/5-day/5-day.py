@@ -1,44 +1,46 @@
+
 #!/usr/bin/env python3
 import sys
 
 def main():
     with open(sys.argv[1]) as f:
-        cargoPositions, instructions = f.read().split('\n\n')
-    print("Part 1: {}".format(part1(cargoPositions, instructions)))
-    print("Part 2: {}".format(part2(cargoPositions, instructions)))
+        cP, i = f.read().split('\n\n')
+    print("Part 1: {}".format(p1(cP, i)))
+    print("Part 2: {}".format(p2(cP, i)))
 
-def part1(cargoPositions, instructions):
-    cargoYSize = int(cargoPositions.splitlines()[-1][-2])
-    cargoXSize = len(cargoPositions.splitlines()[:-1])
-    cargoStacks = [[None for x in range(cargoXSize)] for y in range(cargoYSize)]
-    for idx, char in enumerate(cargoPositions):
+def p1(cp, i):
+    cy = int(cp.splitlines()[-1][-2])
+    cx = len(cp.splitlines()[:-1])
+    cs = [[None for x in range(cx)] for y in range(cy)]
+    for idx, char in enumerate(cp):
         if ('A' <= char <= 'Z'):
-            cargoStacks[(idx // 4) % cargoYSize][(idx // 4) // cargoYSize] = char
-    cargoStacks = [list(filter(None, reversed(x))) for x in cargoStacks]
-    for instruction in instructions.splitlines():
-        _move, qty, _from, fromStack, _to, toStack = instruction.split()
-        qty = int(qty)
-        fromStack = int(fromStack) - 1
-        toStack = int(toStack) - 1
-        for _ in range(qty):
-            cargoStacks[toStack].append(cargoStacks[fromStack].pop())
-    return ''.join([cargoStacks[i][-1] for i in range(len(cargoStacks))])
+            cs[(idx // 4) % cy][(idx // 4) // cy] = char
+    cs = [list(filter(None, reversed(x))) for x in cs]
+    for instruction in i.splitlines():
+        _, q, _, fs, _, ts = instruction.split()
+        q = int(q)
+        fs = int(fs) - 1
+        ts = int(ts) - 1
+        for _ in range(q):
+            cs[ts].append(cs[fs].pop())
+    return ''.join([cs[i][-1] for i in range(len(cs))])
 
-def part2(cargoPositions, instructions):
-    cargoStacks = [[line[i:i+4].strip() for i in range(0, len(line), 4)] for line in cargoPositions.split('\n')[:-1]]
-    cargoStacks = [[cargoStacks[i][j] for i in range(len(cargoStacks))] for j in range(len(cargoStacks[0]))]
-    cargoStacks = [list(filter(None, reversed(line))) for line in cargoStacks]
-    for instruction in instructions.splitlines():
-        _move, qty, _from, fromStack, _to, toStack = instruction.split()
-        qty = int(qty)
-        fromStack = int(fromStack) - 1
-        toStack = int(toStack) - 1
-        tempStack = []
-        for _ in range(qty):
-            tempStack.append(cargoStacks[fromStack].pop())
-        for _ in range(qty):
-            cargoStacks[toStack].append(tempStack.pop())
-    return ''.join([cargoStacks[i][-1][1] for i in range(len(cargoStacks))])
+def p2(cp, i):
+    cs = [[line[i:i+4].strip() for i in range(0, len(line), 4)] for line in cp.split('\n')[:-1]]
+    cs = [[cs[i][j] for i in range(len(cs))] for j in range(len(cs[0]))]
+    cs = [list(filter(None, reversed(line))) for line in cs]
+    for instruction in i.splitlines():
+        _, q, _, fs, _, ts = instruction.split()
+        q = int(q)
+        fs = int(fs) - 1
+        ts = int(ts) - 1
+        ts = []
+        for _ in range(q):
+            ts.append(cs[fs].pop())
+        for _ in range(q):
+            cs[ts].append(ts.pop())
+    return ''.join([cs[i][-1][1] for i in range(len(cs))])
 
 if __name__ == '__main__':
     main()
+
