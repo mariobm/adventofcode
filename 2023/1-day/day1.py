@@ -72,18 +72,18 @@ def part2(lines):
                 digits[0] = (i, int(clean_line[i]))
                 break
             else:
-                isNumberBiggerThan0 = check_for_first_word_number(clean_line, i)
-                if isNumberBiggerThan0 > 0:
-                    digits[0] = (i, isNumberBiggerThan0)
+                number = check_for_first_word_number(clean_line, i)
+                if number > 0:
+                    digits[0] = (i, number)
                     break
         for i in range(len(clean_line) - 1, -1, -1):
             if clean_line[i].isdigit():
                 digits[1] = (i, int(clean_line[i]))
                 break
             else:
-                isNumberBiggerThan0 = check_for_first_word_number(clean_line, i, reverse=True)
-                if isNumberBiggerThan0 > 0:
-                    digits[1] = (i, isNumberBiggerThan0)
+                number = check_for_first_word_number(clean_line, i, reverse=True)
+                if number > 0:
+                    digits[1] = (i, number)
                     break
         sum += (10 * digits[0][1]) + digits[1][1]
     return sum
