@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 # advent of code 2023 1. day solution
+# https://adventofcode.com/2023/day/1
+# Usage: python input1.txt
 
 import sys
 
