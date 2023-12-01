@@ -59,7 +59,7 @@ def check_for_first_word_number(line, current_idx, reverse=False):
     
     return 0
 
-# Ugly code
+# Ugly code but it works
 def part2(lines):
     sum = 0
     for line in lines:
