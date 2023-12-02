@@ -9,8 +9,8 @@ import sys, re
 def main():
     with open(sys.argv[1]) as f:
         lines = f.readlines()
-    print("Part 1: {}".format(part1(lines))) # 54081
-    print("Part 2: {}".format(part2(lines))) # 54649
+    print("Part 1: {}".format(part1(lines))) # 2505
+    print("Part 2: {}".format(part2(lines))) # 70265
 
 def part1(lines):
     rules = {
