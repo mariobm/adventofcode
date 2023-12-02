@@ -4,7 +4,7 @@
 # https://adventofcode.com/2023/day/2
 # Usage: python input1.txt
 
-import sys
+import sys, re
 
 def main():
     with open(sys.argv[1]) as f:
@@ -20,22 +20,9 @@ def part1(lines):
     }
     possible_game_ids = []
     for game_id, line in enumerate(lines):
-        subsets = line.split(":")[1]
         hasBrokenRule = False
-        for colours in subsets.split(";"):
-            current_colour_sum = {
-                "red": 0,
-                "green": 0,
-                "blue": 0,
-            }
-
-            for colour in colours.split(","):
-                number, colour = colour.split()
-                current_colour_sum[colour] += int(number)
-
-                hasBrokenRule = current_colour_sum[colour] > rules[colour]
-                if hasBrokenRule:
-                    break
+        for num, col in re.findall(r'(\d+) (\w+)', line):
+            hasBrokenRule = int(num) > rules[col]
             if hasBrokenRule:
                 break
         if not hasBrokenRule:
@@ -45,17 +32,14 @@ def part1(lines):
 def part2(lines):
     power_sum = []
     for line in lines:
-        subsets = line.split(":")[1]
         max_colours = {
             "red": 0,
             "green": 0,
             "blue": 0,
         }
 
-        for colours in subsets.split(";"):
-            for colour in colours.split(","):
-                number, colour = colour.split()
-                max_colours[colour] = max(max_colours[colour], int(number))
+        for num, col in re.findall(r'(\d+) (\w+)', line):
+            max_colours[col] = max(max_colours[col], int(num))
 
         power_sum.append(max_colours["red"] * max_colours["green"] * max_colours["blue"])
     return sum(power_sum)
